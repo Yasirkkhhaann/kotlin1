@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -37,5 +38,74 @@ import com.plcoding.meditationuiyoutube.ui.theme.*
 @ExperimentalFoundationApi
 @Composable
 fun HomeScreen() {
-    
+
+    Box(
+        modifier = Modifier
+            .background(DeepBlue)
+            .fillMaxSize()
+    ) {
+
+
+        Column {
+            GreetingSection(name = "Yasir")
+            ChipsSection(chips = listOf("Sweet Sleep", "Insomnia", "Depression"))
+
+        }
+
+    }
+}
+
+
+@Composable
+
+fun GreetingSection(name: String) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.dp)
+    ) {
+
+        Column(verticalArrangement = Arrangement.Center) {
+            Text("Good Morning, $name", style = MaterialTheme.typography.h2)
+            Text(
+                "We Wish You Have A Good Day!",
+                style = MaterialTheme.typography.body1
+            )
+        }
+
+        Icon(
+            painter = painterResource(id = R.drawable.ic_search),
+            contentDescription = "Search", tint = Color.White,
+            modifier = Modifier.size(
+                24.dp
+            )
+        )
+    }
+}
+
+
+@Composable
+
+fun ChipsSection(chips: List<String>) {
+
+    var selectedItem by remember { mutableStateOf(0) }
+
+    LazyRow {
+        items(chips.size) {
+            Box(contentAlignment = Alignment.Center,modifier = Modifier
+                .padding(start = 15.dp, top = 15.dp, bottom = 15.dp)
+                .clickable {
+                    selectedItem = it
+                }
+                .clip(RoundedCornerShape(10.dp))
+                .background(if (selectedItem == it) ButtonBlue else DarkerButtonBlue).padding(15.dp)
+            ){
+                Text(text= chips[it] , color = TextWhite)
+            }
+        }
+    }
+
+
 }
